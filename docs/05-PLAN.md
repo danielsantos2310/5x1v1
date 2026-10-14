@@ -84,3 +84,16 @@ Every task has requirement ID, owner, priority, complexity, definition of done, 
 - [ ] Execute milestone 05 five-person user testing and resolve blockers.
 - [ ] Implement production localization infrastructure, PWA assets, CI, auth, DB migrations, tenancy RLS and server-authoritative RSVP only after validation/security review.
 **Caution:** this is preparatory scaffold work, not approval of the UX gate or completion of Foundation.
+
+
+## Foundation code started — 14 October 2026 (implementation checkpoint)
+- [x] Initial multi-club SQL schema: profiles, clubs, multi-role memberships, teams, events, RSVP and attendance records.
+- [x] Enable RLS and conservative read policies; leave sensitive writes disabled.
+- [x] Initial Supabase email authentication pages and reset/confirmation routes.
+- [x] Commit example environment configuration and Supabase setup guide.
+- [ ] Apply and test migration on isolated Supabase project; audit tenant isolation and identity bootstrap.
+- [ ] Configure email confirmation and password recovery end-to-end.
+- [ ] Add secure server transactions for club creation, invitations, team/event writes, waitlist/RSVP, and attendance.
+- [ ] Add CI, unit/integration/E2E tests and deploy after review.
+
+Current status: code committed, **not** tested against a real database or deployed; client dashboard still demo-only.
