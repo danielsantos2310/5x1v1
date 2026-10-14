@@ -10,6 +10,7 @@ Court-Side: a bilingual (pt-BR / English), mobile-first volleyball club manageme
 - [Implementation plan](docs/05-PLAN.md)
 - [Backend architecture](docs/06-BACKEND.md)
 - [Testing](docs/07-TESTING.md)
+- [Four-screen prototype validation (Milestone 05)](docs/09-PROTOTYPE-VALIDATION.md)
 - [Security and privacy](docs/08-SECURITY-PRIVACY.md)
 
 ## Approved branding
