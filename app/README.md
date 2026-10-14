@@ -19,3 +19,6 @@ This is an **unreleased scaffold**, not the validated production app. A separate
 
 ## Next step
 Perform the usability validation described in [../docs/09-PROTOTYPE-VALIDATION.md](../docs/09-PROTOTYPE-VALIDATION.md), then implement i18n routing, accessibility QA, security-approved Supabase schema/RLS and tests in separate reviewed changes.
+
+## Authentication foundation (requires configuration)
+Sign up/sign in/password reset pages and the first deny-by-default multi-club migration are now committed. They are NOT deployed or verified with a real Supabase project. Follow [supabase/README.md](supabase/README.md), then independently test email confirmation and recovery sessions. Do not enable real RSVP writes until RPC transaction and RLS tests are implemented.
