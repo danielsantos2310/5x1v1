@@ -24,3 +24,6 @@ PWA first, native apps after v1. First club IVI with multiple men's and women's 
 
 ## Working approach
 Review product behavior and design before implementing authentication and real data. Prefer feature branches and pull requests; do not commit API secrets or real member data.
+
+## Next.js app scaffold (in progress)
+The [app/](app/) folder contains an initial Next.js/TypeScript mobile-first UI scaffold for Player Home and Admin Overview, with pt-BR/en switching and light/dark appearance. It has **not** been deployed, build-verified or connected to Supabase; it is not a production app. See [app/README.md](app/README.md) for local development instructions. The earlier four-screen HTML demonstration remains in [prototype/](prototype/).
