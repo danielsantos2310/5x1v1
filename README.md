@@ -12,8 +12,11 @@ Court-Side: a bilingual (pt-BR / English), mobile-first volleyball club manageme
 - [Testing](docs/07-TESTING.md)
 - [Security and privacy](docs/08-SECURITY-PRIVACY.md)
 
+## Approved branding
+Official identity: **Concept 5** primary logo, **Standalone Icon A**, and **App Icon 4**, with light and dark variants. The detailed rules and production asset checklist are in [04-DESIGN.md](docs/04-DESIGN.md). Final vector/launcher exports still need production; current graphics are concept references.
+
 ## Prototype
-Open [prototype/index.html](prototype/index.html) locally in a browser. It uses mock data only. The UI/UX designs are not a production app.
+Open [prototype/index.html](prototype/index.html) locally in a browser. Current version: **v0.4**, covering Player Home, Admin Overview, Event Detail, and Attendance. It uses mock data only. The UI/UX designs are not a production app.
 
 ## Product decisions
 PWA first, native apps after v1. First club IVI with multiple men's and women's teams across league divisions. Multi-club isolation required from the first database migration. Guardian accounts deferred to v2. EU, UK and Brazil residency/privacy requirements need legal and hosting verification before launch.
