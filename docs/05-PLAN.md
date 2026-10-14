@@ -63,6 +63,15 @@ Every task has requirement ID, owner, priority, complexity, definition of done, 
 - [x] Offline static clickable prototype for both views with sample-only state.
 - [ ] Five-user usability review (not yet performed).
 - [ ] Refine layouts from feedback and finalize wireframe acceptance.
-- [ ] Event Detail and Attendance interactions.
+- [x] Event Detail and Attendance interactions in the v0.4 prototype (client-side simulations only).
 - [ ] Responsive tablet/desktop screen-specific design.
 - [ ] Real backend, authentication and persisted RSVP (foundation/core build only).
+
+## Milestone 05 — Four-screen validation (v0.5)
+- [x] Four primary UI screens available in demonstration prototype.
+- [x] Approved brand rules recorded in DESIGN.
+- [x] Formal usability test scenarios and acceptance gate documented in [09-PROTOTYPE-VALIDATION.md](09-PROTOTYPE-VALIDATION.md).
+- [ ] Five-person moderated user study across roles.
+- [ ] Verify 320px/390px layouts, keyboard/screen reader, bilingual text, dark/light contrast.
+- [ ] Fix high-severity usability issues and approve the handoff gate.
+- [ ] Start backend foundation after the gate is approved.
