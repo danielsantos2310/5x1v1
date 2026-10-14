@@ -1,8 +1,8 @@
 # DESIGN — UI/UX Specification
-Version 0.1 | Status: Design direction proposed; no mockups approved
+Version 0.5 | Status: Court-Side brand identity approved; remaining screens require UX validation
 
 ## Design intent
-Mobile-first sports utility, simple enough for a coach in a gym and a player responding while walking. Fast task completion over decorative complexity. Do not assume colors or logo are approved for 5x1; first IVI club branding can use its own crest/colors independently of platform brand.
+Mobile-first sports utility, simple enough for a coach in a gym and a player responding while walking. Fast task completion over decorative complexity. The 5x1 brand identity is approved as specified in the Official Brand Identity section below; first-club IVI branding remains independent of the platform.
 
 ## Information architecture
 - Public: landing, language switch, login/signup/reset, invite redemption.
@@ -102,3 +102,75 @@ Design at 320, 360/390, 768 and 1280 px. Verify reach zones while standing, larg
 - Demo states are **not production behavior**. RSVP confirmation and approval counts are simulated; real save semantics require backend acknowledgment.
 - Scope boundary: Event Detail, Attendance, sign-in, server persistence, invitations, live waitlist and permissions are not built.
 - Gate: perform at least five moderated usability tests with players, coaches and admins; capture mis-taps, time-to-RSVP and missing information before committing wireframes.
+
+---
+
+## Official Brand Identity — APPROVED (14 October 2026)
+**Decision status:** Approved for v1 design documentation and prototype use. This section supersedes earlier *proposed* brand explorations. Refer to the final visual brand board from the design review as the visual source of truth; the raster board is an approval reference, not a production-ready vector asset.
+
+### 1. Brand selection
+- **Product name:** 5x1 (not "5X1 APP" in the wordmark).
+- **Primary logo:** Selected **Concept 5** family as refined in the final brand presentation; horizontal geometric volleyball-inspired symbol paired with bold `5x1` wordmark.
+- **Standalone mark:** Selected **Standalone Icon A**; segmented, geometric volleyball/rotation-inspired shape, recognizable without text.
+- **App icon:** Selected **App Icon 4**; square rounded-corner launch icon built from the standalone mark, with distinct light and dark treatments.
+- **Design language:** geometric, modern, technical, sport-inspired, clear at small sizes. Do not substitute the IVI crest as the platform mark.
+
+### 2. Color tokens
+| Token | Hex | Intended role |
+| --- | --- | --- |
+| `brand.navy` | `#021C37` | Wordmark, primary dark backgrounds, headings and high-contrast text |
+| `brand.green` | `#09CD71` | The **x** in 5x1, exactly one geometric icon segment, primary action and active accents |
+| `brand.orange` | `#FE6D09` | Optional, secondary attention/waitlist emphasis; **not** part of core primary logo |
+| `brand.flame` | `#F84C04` | Destructive/cancelled *interface states*, not primary logo coloring |
+| `surface.light` | `#F8FAF7` | Proposed off-white UI surface, validate against final visual files |
+| `surface.dark` | `#021C37` | Base dark theme surface; slightly lifted navy shades for cards |
+
+### 3. Strict mark usage
+1. The mark's volleyball-inspired geometry stays consistent across standalone, combined, and app-icon contexts.
+2. **Only one segment of the geometric mark is green.** All remaining segments are navy on light backgrounds or white on dark backgrounds.
+3. The `5` and `1` in the wordmark are navy on light, white on dark. **Only the x is green** in the wordmark.
+4. Avoid gradients, outlines, extra colors, 3D effects and altered segment positions unless explicitly approved in a future revision.
+5. Do not distort, crop or rotate the geometry. Retain generous clear space. Final geometry and exclusion zone dimensions to be established in vector master assets.
+6. The platform brand is independent of the club: the **IVI crest belongs in IVI club/team context**. Future clubs display their own identity without altering global 5x1 branding.
+
+### 4. Approved variants
+| Asset variant | Background | Symbol segments | Wordmark |
+| --- | --- | --- | --- |
+| Primary logo — light | White / off-white | Navy + **one green** segment | Navy `5` + green `x` + navy `1` |
+| Primary logo — dark | Deep navy | White + **one green** segment | White `5` + green `x` + white `1` |
+| Standalone Icon A — light | Transparent on light | Navy + **one green** segment | None |
+| Standalone Icon A — dark | Transparent on dark | White + **one green** segment | None |
+| App Icon 4 — light | White rounded-square tile | Navy + **one green** segment | None |
+| App Icon 4 — dark | Navy rounded-square tile | White + **one green** segment | None |
+
+The symbol, not the entire wordmark, forms the mobile icon. The *one green segment* rule applies to symbol geometry; the separately green `x` is the wordmark highlight.
+
+### 5. Placement and responsive usage
+- **Landing/login:** primary horizontal logo.
+- **Player and admin headers:** compact wordmark where space permits; standalone icon for very narrow layouts.
+- **PWA launcher / touch icon:** App Icon 4, theme-appropriate export.
+- **Favicon, account/avatar placeholder, social avatar:** Standalone Icon A or derived app-icon export, tested at 16–32 CSS px.
+- **Splash screens / presentations:** approved primary mark, no club crest unless explicitly club-branded.
+
+### 6. Accessibility and legibility
+- Do not use white small text on bright green; use navy `#021C37` on green `#09CD71`.
+- Preserve an accompanying textual accessible name ("5x1") when a logo icon serves as navigation.
+- Test visual differentiation in greyscale and at 16, 24, 32, 64, 192 and 512 pixels.
+- Follow WCAG 2.2 AA for product UI; brand artwork is not itself proof of UI text/color compliance.
+- Reduced-motion preference: logo should remain static; animated intros not required.
+
+### 7. Asset production checklist (not yet finished)
+The **visual direction is approved**, but approval of a raster concept board does **not** automatically provide production master assets. Before release, create/inspect the following without inventing or tracing inaccurate geometry:
+- `brand/5x1-primary-light.svg` and `brand/5x1-primary-dark.svg`
+- `brand/5x1-symbol-light.svg` and `brand/5x1-symbol-dark.svg`
+- `public/icons/icon-192.png`, `public/icons/icon-512.png`, maskable-safe versions
+- `public/favicon.ico`, `public/apple-touch-icon.png`
+- Transparent PNG exports of both primary logos and standalone symbols
+- Contrast, safe-area and icon-size QA; verify license/provenance for any final vector/font components.
+
+Until these exports are approved and committed, design prototypes can represent the identity but should not claim app-store/PWA icon readiness.
+
+### 8. Change control
+Any alterations to segment geometry, number of green segments, 5x1 lettering, icon selection, or canonical color tokens must be reviewed as a **brand decision** and reflected here before implementation. The source visual selection is:
+**Concept 5 + Standalone Icon A + App Icon 4, with light and dark variants**.
+
