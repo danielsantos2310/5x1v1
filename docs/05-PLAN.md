@@ -75,3 +75,12 @@ Every task has requirement ID, owner, priority, complexity, definition of done, 
 - [ ] Verify 320px/390px layouts, keyboard/screen reader, bilingual text, dark/light contrast.
 - [ ] Fix high-severity usability issues and approve the handoff gate.
 - [ ] Start backend foundation after the gate is approved.
+
+
+## Foundation scaffold started — 14 Oct 2026
+- [x] Add `app/` Next.js App Router + TypeScript starter to GitHub.
+- [x] Create responsive client-side Player Home/Admin Overview and theme/locale switches using demonstrative information.
+- [ ] Install dependencies and pass local build/typecheck in a connected developer environment (not performed here).
+- [ ] Execute milestone 05 five-person user testing and resolve blockers.
+- [ ] Implement production localization infrastructure, PWA assets, CI, auth, DB migrations, tenancy RLS and server-authoritative RSVP only after validation/security review.
+**Caution:** this is preparatory scaffold work, not approval of the UX gate or completion of Foundation.
