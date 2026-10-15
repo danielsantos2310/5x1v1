@@ -1,6 +1,7 @@
 'use client';
 
 import {useMemo,useState} from 'react';
+import Link from 'next/link';
 import {demoEvents,demoMembers,demoNotices,demoTeams,labels,type Role,type Locale,type Screen,type RSVP,type Event} from '../lib/demo-data';
 import styles from './workspace.module.css';
 
@@ -55,7 +56,7 @@ export default function HomePage(){
   <div className={styles.workspace}>
    <header className={styles.topbar}>
     <div className={styles.crumb}>IVI <span>/</span> {t[activeScreen]}</div>
-    <div className={styles.topActions}>
+    <div className={styles.topActions}><Link href="/live" className={styles.linkButton} aria-label="Open live Supabase data">↗ Supabase Live</Link>
       <label className={styles.roleControl}><span>{t.role}</span><select aria-label={t.role} value={role} onChange={e=>changeRole(e.target.value as Role)}><option value="admin">{t.admin}</option><option value="coach">{t.coach}</option><option value="player">{t.player}</option></select></label>
       <button className={styles.iconButton} type="button" aria-label={t.notifications} onClick={()=>changeScreen('notifications')}>♧{notices.some(n=>n.unread)&&<span className={styles.dot}/>}</button>
       <span className={styles.avatar} title="5x1 demo account">5X</span>
