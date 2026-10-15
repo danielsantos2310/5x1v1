@@ -1,0 +1,12 @@
+-- Supabase 5x1 migration 20261015171327: index foreign keys.
+create index if not exists idx_attendance_event_club on public.attendance_records(event_id,club_id);
+create index if not exists idx_attendance_marked_by on public.attendance_records(marked_by);
+create index if not exists idx_attendance_user on public.attendance_records(user_id);
+create index if not exists idx_clubs_created_by on public.clubs(created_by);
+create index if not exists idx_events_created_by on public.events(created_by);
+create index if not exists idx_events_team_club on public.events(team_id,club_id);
+create index if not exists idx_rsvps_event_club on public.rsvps(event_id,club_id);
+create index if not exists idx_rsvps_user on public.rsvps(user_id);
+create index if not exists idx_team_memberships_member_club on public.team_memberships(membership_id,club_id);
+create index if not exists idx_team_memberships_team_club on public.team_memberships(team_id,club_id);
+create index if not exists idx_teams_club_id on public.teams(club_id);
