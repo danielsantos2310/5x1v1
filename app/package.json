@@ -1,3 +1,4 @@
+
 {
   "name": "5x1-courtside",
   "version": "0.1.0",
@@ -9,11 +10,11 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "^15.5.0",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.118.0",
+    "next": "^16.4.1",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "@supabase/ssr": "0.12.7",
-    "@supabase/supabase-js": "2.118.0"
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
