@@ -40,6 +40,7 @@ function throwIfError(error:{message:string}|null) {
 export async function getLiveSnapshot(preferredClubId?:string):Promise<LiveSnapshot> {
   const supabase=getSupabaseBrowserClient();
   const {data:auth,error:authError}=await supabase.auth.getUser();
+  if(authError?.message.toLowerCase().includes('session missing')) throw new Error('Sign in to access live club information.');
   throwIfError(authError);
   if(!auth.user) throw new Error('Sign in to access live club information.');
 
