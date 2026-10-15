@@ -11,7 +11,10 @@ export function getSupabaseBrowserClient() {
   if (!url || !key) {
     throw new Error('Supabase browser configuration is missing. See app/.env.example');
   }
-  return createBrowserClient<Database>(url, key);
+  // The linked project's generator targets PostgREST 14, whereas the currently
+  // installed Supabase JS types may predate versioned PostgREST definitions.
+  // Keep the generated table schema while using the library's default API version.
+  return createBrowserClient<Omit<Database, '__InternalSupabase'>>(url, key);
 }
 
 export function isSupabaseConfigured() {
