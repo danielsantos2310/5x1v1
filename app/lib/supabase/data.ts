@@ -174,3 +174,18 @@ export async function cancelEvent(event:Event){
   if(!data) throw new Error('Event was changed or cancelled elsewhere. Refresh first.');
   return data;
 }
+
+
+/** Event-specific participant list. RLS enforces team/club visibility. */
+export async function getEventAttendance(event:Event){
+ const client=getSupabaseBrowserClient();
+ const {data:auth,error:authError}=await client.auth.getUser();
+ throwIfError(authError);
+ if(!auth.user)throw new Error('Sign in to view attendance.');
+ const [roster,marks]=await Promise.all([
+  client.from('rsvps').select('user_id,status,created_at').eq('club_id',event.club_id).eq('event_id',event.id).order('created_at',{ascending:true}),
+  client.from('attendance_records').select('user_id,status,marked_at').eq('club_id',event.club_id).eq('event_id',event.id)
+ ]);
+ throwIfError(roster.error);throwIfError(marks.error);
+ return {participants:roster.data??[], marks:marks.data??[]};
+}
