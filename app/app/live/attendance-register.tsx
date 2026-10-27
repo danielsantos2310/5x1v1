@@ -5,7 +5,7 @@ import {getEventAttendance,saveAttendance,type LiveSnapshot} from '../../lib/sup
 import styles from './live.module.css';
 
 type Mark='present'|'absent'|'late';
-type Participant={user_id:string;status:string;created_at:string};
+type Participant={user_id:string;display_name:string;rsvp_status:string|null};
 type Saved={user_id:string;status:string;marked_at:string};
 const choices:{value:Mark;label:string}[]=[{value:'present',label:'Presente'},{value:'late',label:'Atrasado'},{value:'absent',label:'Ausente'}];
 export default function AttendanceRegister({snapshot,onSaved}:{snapshot:LiveSnapshot;onSaved:()=>Promise<void>}){
@@ -20,7 +20,7 @@ export default function AttendanceRegister({snapshot,onSaved}:{snapshot:LiveSnap
  const event=snapshot.events.find(e=>e.id===eventId);
  const marked=saved.reduce<Record<string,Mark>>((acc,row)=>{if(row.status==='present'||row.status==='late'||row.status==='absent')acc[row.user_id]=row.status;return acc;},{});
  const changes=Object.entries(draft).filter(([id,value])=>marked[id]!==value);
- const eligible=participants.filter(p=>p.status==='going'||p.status==='maybe'||p.status==='waitlist');
+ const eligible=participants;
  const markedCount=eligible.filter(p=>draft[p.user_id]||marked[p.user_id]).length;
 
  useEffect(()=>{setEventId('');setParticipants([]);setSaved([]);setDraft({});setError('');setNotice('');},[snapshot.activeClub.id]);
@@ -53,12 +53,12 @@ export default function AttendanceRegister({snapshot,onSaved}:{snapshot:LiveSnap
  }
  return <section className={styles.section} aria-labelledby="attendance-heading">
   <div className={styles.sectionHead}><div><p className={styles.eyebrow}>IVI / EVENT REGISTER</p><h2 id="attendance-heading">Controle de presença</h2></div>{event&&<strong>{markedCount} / {eligible.length}</strong>}</div>
-  <p className={styles.attendanceHelp}>Marque os participantes identificados pela inscrição no evento. Os nomes reais ainda dependem de uma consulta segura ao elenco. Registros sem RSVP não aparecem nesta versão.</p>
+  <p className={styles.attendanceHelp}>Marque atletas do elenco autorizado, mesmo sem RSVP. Os nomes são obtidos por consulta protegida, apenas para administradores e treinadores autorizados.</p>
   <label className={styles.attendanceSelect}>Evento
    <select value={eventId} onChange={e=>setEventId(e.target.value)} disabled={busy}><option value="">Selecione um evento</option>{snapshot.events.filter(e=>e.status==='scheduled').map(e=><option value={e.id} key={e.id}>{e.title} · {new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'short',timeZone:snapshot.activeClub.timezone}).format(new Date(e.starts_at))}</option>)}</select>
   </label>
   {loading&&<p role="status">Carregando participantes…</p>}
-  {event&&!loading&&!error&&<>{!eligible.length?<p>Não há participantes elegíveis com RSVP visível. O elenco completo ainda não está disponível nesta tela.</p>:<div className={styles.attendanceRoster}>{eligible.map((p,index)=><div key={p.user_id} className={styles.attendancePerson}><div><strong>Atleta {index+1}</strong><small>Ref. {p.user_id.slice(0,8)} · RSVP: {p.status}</small></div><div role="group" aria-label={'Presença de atleta '+(index+1)} className={styles.attendanceChoices}>{choices.map(c=><button key={c.value} type="button" disabled={busy} aria-pressed={(draft[p.user_id]??marked[p.user_id])===c.value} onClick={()=>setDraft(d=>({...d,[p.user_id]:c.value}))}>{c.label}</button>)}</div></div>)}</div>}
+  {event&&!loading&&!error&&<>{!eligible.length?<p>Não há atletas ativos neste elenco ou você não tem acesso ao evento.</p>:<div className={styles.attendanceRoster}>{eligible.map((p,index)=><div key={p.user_id} className={styles.attendancePerson}><div><strong>{p.display_name.trim()||'Atleta '+(index+1)}</strong><small>RSVP: {p.rsvp_status??'Sem resposta'}</small></div><div role="group" aria-label={'Presença de '+(p.display_name.trim()||'atleta '+(index+1))} className={styles.attendanceChoices}>{choices.map(c=><button key={c.value} type="button" disabled={busy} aria-pressed={(draft[p.user_id]??marked[p.user_id])===c.value} onClick={()=>setDraft(d=>({...d,[p.user_id]:c.value}))}>{c.label}</button>)}</div></div>)}</div>}
    {eligible.length>0&&<div className={styles.attendanceFooter}><span>{changes.length} alteração(ões) pendente(s)</span><button type="button" className={styles.confirmCreate} disabled={busy||changes.length===0} onClick={()=>void submit()}>{busy?'Salvando…':'Salvar presença'}</button></div>}
   </>}
   {error&&<p className={styles.teamFormError} role="alert">{error}</p>}
