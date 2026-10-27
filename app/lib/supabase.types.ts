@@ -476,7 +476,10 @@ export type Database = {
       }
     }
     Functions: {
-      [_ in never]: never
+      event_attendance_roster: {
+        Args: { p_event_id: string }
+        Returns: { user_id: string; display_name: string; rsvp_status: string | null }[]
+      }
     }
     Enums: {
       [_ in never]: never
