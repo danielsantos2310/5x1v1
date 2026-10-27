@@ -143,3 +143,34 @@ export async function createEvent(input:Pick<Event,'club_id'|'team_id'|'title'|'
   if(!data) throw new Error('The event was not created.');
   return data;
 }
+
+
+export type EditableEvent = Event;
+
+export async function updateEvent(event:Event, changes:Pick<Event,'title'|'type'|'starts_at'|'ends_at'|'venue_name'|'capacity'|'rsvp_deadline'>){
+  const client=getSupabaseBrowserClient();
+  const {data:auth,error:authError}=await client.auth.getUser();
+  throwIfError(authError);
+  if(!auth.user) throw new Error('Sign in to edit an event.');
+  if(event.status!=='scheduled') throw new Error('Cancelled events cannot be edited.');
+  const {data,error}=await client.from('events').update(changes)
+    .eq('id',event.id).eq('club_id',event.club_id).eq('status','scheduled')
+    .eq('updated_at',event.updated_at).select('*').maybeSingle();
+  throwIfError(error);
+  if(!data) throw new Error('Event was changed or is no longer available. Refresh and try again.');
+  return data;
+}
+
+export async function cancelEvent(event:Event){
+  const client=getSupabaseBrowserClient();
+  const {data:auth,error:authError}=await client.auth.getUser();
+  throwIfError(authError);
+  if(!auth.user) throw new Error('Sign in to cancel an event.');
+  if(event.status!=='scheduled') throw new Error('This event is already cancelled.');
+  const {data,error}=await client.from('events').update({status:'cancelled'})
+    .eq('id',event.id).eq('club_id',event.club_id).eq('status','scheduled')
+    .eq('updated_at',event.updated_at).select('*').maybeSingle();
+  throwIfError(error);
+  if(!data) throw new Error('Event was changed or cancelled elsewhere. Refresh first.');
+  return data;
+}
