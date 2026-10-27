@@ -176,14 +176,14 @@ export async function cancelEvent(event:Event){
 }
 
 
-/** Event-specific participant list. RLS enforces team/club visibility. */
+/** Restricted event roster: names are returned only by the authorized SQL function. */
 export async function getEventAttendance(event:Event){
  const client=getSupabaseBrowserClient();
  const {data:auth,error:authError}=await client.auth.getUser();
  throwIfError(authError);
  if(!auth.user)throw new Error('Sign in to view attendance.');
  const [roster,marks]=await Promise.all([
-  client.from('rsvps').select('user_id,status,created_at').eq('club_id',event.club_id).eq('event_id',event.id).order('created_at',{ascending:true}),
+  client.rpc('event_attendance_roster',{p_event_id:event.id}),
   client.from('attendance_records').select('user_id,status,marked_at').eq('club_id',event.club_id).eq('event_id',event.id)
  ]);
  throwIfError(roster.error);throwIfError(marks.error);
