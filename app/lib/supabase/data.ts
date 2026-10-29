@@ -2,6 +2,7 @@
 
 import {getSupabaseBrowserClient} from './browser';
 import type {Database} from '../supabase.types';
+import {requireUuid,validateTeam,validateEvent,validateAttendance} from '../security/validation';
 
 type Tables = Database['public']['Tables'];
 type Club = Tables['clubs']['Row'];
@@ -26,10 +27,16 @@ export type LiveSnapshot = {
 export type LiveMutationResult<T> = {data:T; message:string};
 
 function requireClub(clubId:string) {
-  if (!clubId || typeof clubId!=='string') throw new Error('Select a club first.');
+  requireUuid(clubId,'Club ID');
 }
 function throwIfError(error:{message:string}|null) {
-  if(error) throw new Error(error.message);
+  if(error) {
+    const code='code' in error ? String(error.code) : '';
+    if(code==='42501'||code==='PGRST301')throw new Error('You do not have permission to complete this request.');
+    if(code==='23505')throw new Error('This record already exists.');
+    if(code==='23514'||code==='22P02')throw new Error('The supplied data is invalid.');
+    throw new Error('Request failed. Please try again or contact your club administrator.');
+  }
 }
 
 /**
@@ -99,6 +106,7 @@ export async function saveMyRSVP(event:Event, status:'going'|'maybe'|'not_going'
 export async function saveAttendance(input:{
   club_id:string;event_id:string;user_id:string;status:'present'|'absent'|'late'
 }) {
+  requireUuid(input.club_id,'Club ID');requireUuid(input.event_id,'Event ID');requireUuid(input.user_id,'Player ID');validateAttendance(input.status);
   const client=getSupabaseBrowserClient();
   const {data:auth,error:authError}=await client.auth.getUser();
   throwIfError(authError);
@@ -124,7 +132,7 @@ export async function markNotificationRead(id:string) {
 }
 
 export async function createTeam(input:Pick<Team,'club_id'|'name'|'division'|'gender'>) {
-  requireClub(input.club_id);
+  requireClub(input.club_id);validateTeam(input);
   const client=getSupabaseBrowserClient();
   const {data,error}=await client.from('teams').insert(input).select('*').single();
   throwIfError(error);
@@ -133,7 +141,7 @@ export async function createTeam(input:Pick<Team,'club_id'|'name'|'division'|'ge
 }
 
 export async function createEvent(input:Pick<Event,'club_id'|'team_id'|'title'|'type'|'starts_at'|'ends_at'|'capacity'|'venue_name'|'rsvp_deadline'>) {
-  requireClub(input.club_id);
+  requireClub(input.club_id);validateEvent(input);if(input.team_id!==null)requireUuid(input.team_id,'Team ID');
   const client=getSupabaseBrowserClient();
   const {data:auth,error:authError}=await client.auth.getUser();
   throwIfError(authError);
@@ -148,6 +156,7 @@ export async function createEvent(input:Pick<Event,'club_id'|'team_id'|'title'|'
 export type EditableEvent = Event;
 
 export async function updateEvent(event:Event, changes:Pick<Event,'title'|'type'|'starts_at'|'ends_at'|'venue_name'|'capacity'|'rsvp_deadline'>){
+  requireUuid(event.id,'Event ID');validateEvent(changes);
   const client=getSupabaseBrowserClient();
   const {data:auth,error:authError}=await client.auth.getUser();
   throwIfError(authError);
